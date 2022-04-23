@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Client: ClientProtocol {
-    public func get(url: String, guest_token: String) async throws -> Data {
+    internal func get(url: String, guest_token: String) async throws -> Data {
         let Url: URL = URL(string: url)!
         var request = URLRequest(url: Url)
         request.httpMethod = "GET"
@@ -18,7 +18,7 @@ public struct Client: ClientProtocol {
         let (data, _) = try await URLSession.shared.data(for: request)
         return data
     }
-    public func post(url: String) async throws -> Data {
+    internal func post(url: String) async throws -> Data {
         let Url: URL = URL(string: url)!
         var request = URLRequest(url: Url)
         request.httpMethod = "POST"
@@ -26,5 +26,23 @@ public struct Client: ClientProtocol {
         request.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36", forHTTPHeaderField: "User-Agent")
         let (data, _) = try await URLSession.shared.data(for: request)
         return data
+    }
+}
+
+public enum T {
+    case rate_limit_status
+}
+
+public extension T {
+    func rate_limit_status() async -> [String: Any] {
+        switch self {
+        case .rate_limit_status:
+            do {
+                let data = try await Client().rate_limit_status()
+                return data
+            } catch {
+                return [:]
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Client {
+public extension Client {
     /**
      GET collections/entries
 
