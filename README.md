@@ -7,9 +7,15 @@
 This library allows you to manipulate the Twitter API without a developer account.
 
 Currently only [Twitter API v1.1](https://developer.twitter.com/en/docs/api-reference-index#twitter-api-standard) is supported.
+<<<<<<< HEAD
+I plan to support [Twitter API v2](https://developer.twitter.com/en/docs/api-reference-index#twitter-api-v2) and Twitter private APIs in the future.
+=======
+>>>>>>> 85d140ce5469fad0b57f7f12f81857f5287e28d9
+
 I plan to support [Twitter API v2](https://developer.twitter.com/en/docs/api-reference-index#twitter-api-v2) and Twitter private APIs in the future.
 
-If you like the project, please `Star ⭐️`
+
+If you like the project, Please `Star ⭐️`
 
 ## Install
 
