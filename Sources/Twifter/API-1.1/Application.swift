@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Client {
+public extension TwifterClient {
     /**
      GET application/rate_limit_status
 
@@ -19,7 +19,7 @@ public extension Client {
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/developer-utilities/rate-limit-status/api-reference/get-application-rate_limit_status
      */
-    public func rate_limit_status(resources: [Resources]? = nil) async throws -> [String: Any] {
+    func rate_limit_status(resources: [Resources]? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/application/rate_limit_status.json"
         if resources != nil {

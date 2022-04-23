@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension Client {
-    public func generate_guest_token() async throws -> GuestToken {
+public extension TwifterClient {
+    func generate_guest_token() async throws -> GuestToken {
         let urlString: String = "https://api.twitter.com/1.1/guest/activate.json"
         let data = try await post(url: urlString)
         do {

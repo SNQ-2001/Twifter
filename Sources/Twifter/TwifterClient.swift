@@ -7,10 +7,8 @@
 
 import Foundation
 
-public class Client: ClientProtocol {
-    public init() {
-
-    }
+public class TwifterClient: TwifterClientProtocol {
+    public init() {}
     internal func get(url: String, guest_token: String) async throws -> Data {
         let Url: URL = URL(string: url)!
         var request = URLRequest(url: Url)
