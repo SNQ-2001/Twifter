@@ -7,6 +7,6 @@
 
 import SwiftUI
 
-struct GuestToken: Codable {
+public struct GuestToken: Codable {
     let guest_token: String
 }

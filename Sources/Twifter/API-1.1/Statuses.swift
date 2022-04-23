@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Twifter {
+extension Client {
     /**
      GET statuses/lookup
 

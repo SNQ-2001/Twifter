@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum Exclude: String {
+public enum Exclude: String {
     case hashtags
 }

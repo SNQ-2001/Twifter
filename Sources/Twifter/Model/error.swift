@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Errors: Codable, Error {
+public struct Errors: Codable, Error {
     let errors: [ErrorElement]
 }
 
-struct ErrorElement: Codable, Error {
+public struct ErrorElement: Codable, Error {
     let code: Int
     let message: String
 }

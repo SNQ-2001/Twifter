@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TwifterProtocol {
+protocol ClientProtocol {
     // MARK: - Guest -
     func generate_guest_token(
     ) async throws -> GuestToken

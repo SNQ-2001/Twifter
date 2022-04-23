@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Twifter {
+extension Client {
     /**
      GET application/rate_limit_status
 
