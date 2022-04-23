@@ -1,16 +1,12 @@
 # Twifter
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/SNQ-2001/Twifter)
-[![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/SNQ-2001/Twifter)
+[![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/SNQ-2001/Twifter/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/_SNQ?style=social)](https://twitter.com/_SNQ)
 
 This library allows you to manipulate the Twitter API without a developer account.
 
 Currently only [Twitter API v1.1](https://developer.twitter.com/en/docs/api-reference-index#twitter-api-standard) is supported.
-<<<<<<< HEAD
-I plan to support [Twitter API v2](https://developer.twitter.com/en/docs/api-reference-index#twitter-api-v2) and Twitter private APIs in the future.
-=======
->>>>>>> 85d140ce5469fad0b57f7f12f81857f5287e28d9
 
 I plan to support [Twitter API v2](https://developer.twitter.com/en/docs/api-reference-index#twitter-api-v2) and Twitter private APIs in the future.
 
