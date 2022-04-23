@@ -1,6 +1,6 @@
 # Twifter
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/SNQ-2001/Twifter)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/SNQ-2001/Twifter)
 [![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/SNQ-2001/Twifter/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/_SNQ?style=social)](https://twitter.com/_SNQ)
 
