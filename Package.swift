@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Twifter",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v15),
         .macOS(.v10_10),
         .tvOS(.v9),
         .watchOS(.v2)

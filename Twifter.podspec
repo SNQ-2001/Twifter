@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+This library allows you to manipulate the Twitter API without a developer account.
                        DESC
 
   s.homepage         = 'https://github.com/SNQ-2001/Twifter'
@@ -28,9 +28,11 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/SNQ-2001/Twifter.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/_SNQ'
 
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '15.0'
 
   s.source_files = 'Sources/**/*.swift'
+
+  s.swift_version = '5.5'
   
   # s.resource_bundles = {
   #   'Twifter' => ['Twifter/Assets/*.png']
