@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ClientProtocol {
+public protocol ClientProtocol {
     // MARK: - Guest -
     func generate_guest_token(
     ) async throws -> GuestToken
