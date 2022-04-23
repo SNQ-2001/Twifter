@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Client: ClientProtocol {
+public class Client: ClientProtocol {
     public init() {
 
     }
