@@ -12,7 +12,7 @@ protocol TwifterProtocol {
     func generate_guest_token(
     ) async throws -> GuestToken
 
-    
+
     // MARK: - Application -
     func rate_limit_status(
         resources: [Resources]?
@@ -112,6 +112,25 @@ protocol TwifterProtocol {
 
     func geo_search(
         query: String,
+        granularity: Granularity?,
+        accuracy: Int?,
+        max_results: Int?,
+        contained_within: String?,
+        attribute_street_address: String?
+    ) async throws -> [String: Any]
+
+    func geo_search(
+        lat: Double,
+        long: Double,
+        granularity: Granularity?,
+        accuracy: Int?,
+        max_results: Int?,
+        contained_within: String?,
+        attribute_street_address: String?
+    ) async throws -> [String: Any]
+
+    func geo_search(
+        ip: String,
         granularity: Granularity?,
         accuracy: Int?,
         max_results: Int?,
