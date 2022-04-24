@@ -27,11 +27,12 @@ public extension TwifterClient {
      - since_id: Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since_id, the since_id will be forced to the oldest ID available.
      - max_id: Returns results with an ID less than (that is, older than) or equal to the specified ID.
      - include_entities: The entities node will not be included when set to false.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets
      */
-    func search_tweets(q: String, geocode: String? = nil, lang: Languages? = nil, locale: Locale? = nil, result_type: Result_Type? = nil, count: Int? = nil, until: (year: Int, month: Int, day: Int)? = nil, since_id: Int? = nil, max_id: Int? = nil, include_entities: Bool? = nil) async throws -> [String: Any] {
+    func search_tweets(q: String, geocode: String? = nil, lang: Languages? = nil, locale: Locale? = nil, result_type: Result_Type? = nil, count: Int? = nil, until: (year: Int, month: Int, day: Int)? = nil, since_id: Int? = nil, max_id: Int? = nil, include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/search/tweets.json?q=\(q.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"
         if geocode != nil {
@@ -60,6 +61,9 @@ public extension TwifterClient {
         }
         if include_entities != nil {
             urlString = "\(urlString)&include_entities=\(include_entities!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]

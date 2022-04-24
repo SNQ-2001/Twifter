@@ -43,4 +43,3 @@ public enum Resources: String {
     case live_pipeline
     case graphql
 }
-

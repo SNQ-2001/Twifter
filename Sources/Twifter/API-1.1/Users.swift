@@ -21,7 +21,7 @@ public extension TwifterClient {
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup
      */
-    func users_lookup(user_id: [Int], include_entities: Bool? = nil, tweet_mode: Bool? = nil) async throws -> [[String: Any]] {
+    func users_lookup(user_id: [Int], include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/users/lookup.json"
         var user_id_list: [String] = []
@@ -34,7 +34,7 @@ public extension TwifterClient {
             urlString = "\(urlString)&include_entities=\(include_entities!)"
         }
         if tweet_mode != nil {
-            urlString = "\(urlString)&tweet_mode=\(tweet_mode!)"
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
@@ -55,13 +55,16 @@ public extension TwifterClient {
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup
      */
-    func users_lookup(screen_name: [String], include_entities: Bool? = nil) async throws -> [[String: Any]] {
+    func users_lookup(screen_name: [String], include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/users/lookup.json"
         let query: String = screen_name.joined(separator: ",").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
         urlString = "\(urlString)?screen_name=\(query)"
         if include_entities != nil {
             urlString = "\(urlString)&include_entities=\(include_entities!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
@@ -79,11 +82,12 @@ public extension TwifterClient {
      - page: Specifies the page of results to retrieve.
      - count: The number of potential user results to retrieve per page. This value has a maximum of 20.
      - include_entities: The entities node will not be included in embedded Tweet objects when set to false .
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-users-search
      */
-    func users_search(q: String, page: Int? = nil, count: Int? = nil, include_entities: Bool? = nil) async throws -> [[String: Any]] {
+    func users_search(q: String, page: Int? = nil, count: Int? = nil, include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/users/search.json?q=\(q.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"
         if page != nil {
@@ -94,6 +98,9 @@ public extension TwifterClient {
         }
         if include_entities != nil {
             urlString = "\(urlString)&include_entities=\(include_entities!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
@@ -109,13 +116,17 @@ public extension TwifterClient {
      - Parameters:
      - user_id: The ID of the user for whom to return results. Either an id or screen_name is required for this method.
      - include_entities: The entities node will not be included when set to false.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-users-show
      */
-    func user_show(user_id: Int, include_entities: Bool? = nil) async throws -> [String: Any] {
+    func user_show(user_id: Int, include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
-        let urlString: String = "https://api.twitter.com/1.1/users/show.json?user_id=\(user_id)"
+        var urlString: String = "https://api.twitter.com/1.1/users/show.json?user_id=\(user_id)"
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
+        }
         let data = try await get(url: urlString, guest_token: guest_token)
         let user_info = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         return user_info ?? [:]
@@ -134,9 +145,12 @@ public extension TwifterClient {
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-users-show
      */
-    func user_show(screen_name: String, include_entities: Bool? = nil) async throws -> [String: Any] {
+    func user_show(screen_name: String, include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
-        let urlString: String = "https://api.twitter.com/1.1/users/show.json?screen_name=\(screen_name)"
+        var urlString: String = "https://api.twitter.com/1.1/users/show.json?screen_name=\(screen_name)"
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
+        }
         let data = try await get(url: urlString, guest_token: guest_token)
         let user_info = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         return user_info ?? [:]

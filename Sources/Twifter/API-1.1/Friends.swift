@@ -83,11 +83,12 @@ public extension TwifterClient {
      - count: The number of users to return per page, up to a maximum of 200.
      - skip_status: When set to either true, t or 1 statuses will not be included in the returned user objects.
      - include_user_entities: The user object entities node will not be included when set to false.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-friends-list
      */
-    func friends_list(user_id: Int, cursor: String? = nil, count: Int? = nil, skip_status: Bool? = nil, include_user_entities: Bool? = nil) async throws -> [String: Any] {
+    func friends_list(user_id: Int, cursor: String? = nil, count: Int? = nil, skip_status: Bool? = nil, include_user_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/friends/list.json?user_id=\(user_id)"
         if cursor != nil {
@@ -101,6 +102,9 @@ public extension TwifterClient {
         }
         if include_user_entities != nil {
             urlString = "\(urlString)&include_user_entities=\(include_user_entities!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
@@ -119,11 +123,12 @@ public extension TwifterClient {
      - count: The number of users to return per page, up to a maximum of 200.
      - skip_status: When set to either true, t or 1 statuses will not be included in the returned user objects.
      - include_user_entities: The user object entities node will not be included when set to false.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-friends-list
      */
-    func friends_list(screen_name: String, cursor: String? = nil, count: Int? = nil, skip_status: Bool? = nil, include_user_entities: Bool? = nil) async throws -> [String: Any] {
+    func friends_list(screen_name: String, cursor: String? = nil, count: Int? = nil, skip_status: Bool? = nil, include_user_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/friends/list.json?screen_name=\(screen_name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"
         if cursor != nil {
@@ -137,6 +142,9 @@ public extension TwifterClient {
         }
         if include_user_entities != nil {
             urlString = "\(urlString)&include_user_entities=\(include_user_entities!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]

@@ -18,11 +18,12 @@ public extension TwifterClient {
      - count: Specifies the maximum number of results to include in the response. Specify a count between 1 and 200. A next_cursor value will be provided in the response if additional results are available.
      - max_position: Returns results with a position value less than or equal to the specified position.
      - min_position: Returns results with a position greater than the specified position.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/tweets/curate-a-collection/api-reference/get-collections-entries
      */
-    func collections_entries(id: String, count: Int? = nil, max_position: Int? = nil, min_position: Int? = nil) async throws -> [String: Any] {
+    func collections_entries(id: String, count: Int? = nil, max_position: Int? = nil, min_position: Int? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/collections/entries.json?id=\(id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"
         if count != nil {
@@ -34,9 +35,11 @@ public extension TwifterClient {
         if min_position != nil {
             urlString = "\(urlString)&min_position=\(min_position!)"
         }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
+        }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         return result ?? [:]
     }
 }
-

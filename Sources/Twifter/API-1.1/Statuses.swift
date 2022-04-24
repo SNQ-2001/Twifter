@@ -18,11 +18,12 @@ public extension TwifterClient {
      - include_entities: The entities node that may appear within embedded statuses will not be included when set to false.
      - trim_user: When set to either true , t or 1 , each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
      - map: When using the map parameter, Tweets that do not exist or cannot be viewed by the current user will still have their key represented but with an explicitly null value paired with it
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/tweets/post-and-engage/api-reference/get-statuses-lookup
      */
-    func statuses_lookup(id: [Int], include_entities: Bool? = nil, trim_user: Bool? = nil, map: Bool? = nil) async throws -> [[String: Any]] {
+    func statuses_lookup(id: [Int], include_entities: Bool? = nil, trim_user: Bool? = nil, map: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/statuses/lookup.json"
         if !id.isEmpty {
@@ -41,6 +42,9 @@ public extension TwifterClient {
         }
         if map != nil {
             urlString = "\(urlString)&map=\(map!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
@@ -114,11 +118,12 @@ public extension TwifterClient {
      - id: The numerical ID of the desired Tweet.
      - trim_user: When set to either true , t or 1 , each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
      - include_entities: The entities node will not be included when set to false.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/tweets/post-and-engage/api-reference/get-statuses-show-id
      */
-    func statuses_show(id: Int, trim_user: Bool? = nil, include_entities: Bool? = nil) async throws -> [String: Any] {
+    func statuses_show(id: Int, trim_user: Bool? = nil, include_entities: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/statuses/show.json?id=\(id)"
         if trim_user != nil {
@@ -126,6 +131,9 @@ public extension TwifterClient {
         }
         if include_entities != nil {
             urlString = "\(urlString)&include_entities=\(include_entities!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
@@ -146,11 +154,12 @@ public extension TwifterClient {
      - trim_user: When set to either true , t or 1 , each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
      - exclude_replies: This parameter will prevent replies from appearing in the returned timeline. Using exclude_replies with the count parameter will mean you will receive up-to count tweets — this is because the count parameter retrieves that many Tweets before filtering out retweets and replies.
      - include_rts: When set to false , the timeline will strip any native retweets (though they will still count toward both the maximal length of the timeline and the slice selected by the count parameter). Note: If you're using the trim_user parameter in conjunction with include_rts, the retweets will still contain a full user object.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-user_timeline
      */
-    func statuses_user_timeline(user_id: Int, since_id: Int? = nil, max_id: Int? = nil, count: Int? = nil, trim_user: Bool? = nil, exclude_replies: Bool? = nil, contributor_details: Bool? = nil, include_rts: Bool? = nil) async throws -> [[String: Any]] {
+    func statuses_user_timeline(user_id: Int, since_id: Int? = nil, max_id: Int? = nil, count: Int? = nil, trim_user: Bool? = nil, exclude_replies: Bool? = nil, contributor_details: Bool? = nil, include_rts: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=\(user_id)"
         if since_id != nil {
@@ -177,6 +186,9 @@ public extension TwifterClient {
         if include_rts != nil {
             urlString = "\(urlString)&include_rts=\(include_rts!)"
         }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
+        }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
         return result ?? [[:]]
@@ -196,11 +208,12 @@ public extension TwifterClient {
      - trim_user: When set to either true , t or 1 , each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
      - exclude_replies: This parameter will prevent replies from appearing in the returned timeline. Using exclude_replies with the count parameter will mean you will receive up-to count tweets — this is because the count parameter retrieves that many Tweets before filtering out retweets and replies.
      - include_rts: When set to false , the timeline will strip any native retweets (though they will still count toward both the maximal length of the timeline and the slice selected by the count parameter). Note: If you're using the trim_user parameter in conjunction with include_rts, the retweets will still contain a full user object.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-user_timeline
      */
-    func statuses_user_timeline(screen_name: String, since_id: Int? = nil, max_id: Int? = nil, count: Int? = nil, trim_user: Bool? = nil, exclude_replies: Bool? = nil, contributor_details: Bool? = nil, include_rts: Bool? = nil) async throws -> [[String: Any]] {
+    func statuses_user_timeline(screen_name: String, since_id: Int? = nil, max_id: Int? = nil, count: Int? = nil, trim_user: Bool? = nil, exclude_replies: Bool? = nil, contributor_details: Bool? = nil, include_rts: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=\(screen_name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)"
         if since_id != nil {
@@ -226,6 +239,9 @@ public extension TwifterClient {
         }
         if include_rts != nil {
             urlString = "\(urlString)&include_rts=\(include_rts!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]

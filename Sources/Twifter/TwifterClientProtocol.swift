@@ -24,8 +24,29 @@ public protocol TwifterClientProtocol {
         id: String,
         count: Int?,
         max_position: Int?,
-        min_position: Int?
+        min_position: Int?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
+
+
+    // MARK: - Favorites -
+    func favorites_list(
+        user_id: String,
+        count: Int?,
+        since_id: Int?,
+        max_id: Int?,
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
+    ) async throws -> [[String: Any]]
+
+    func favorites_list(
+        screen_name: String,
+        count: Int?,
+        since_id: Int?,
+        max_id: Int?,
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
+    ) async throws -> [[String: Any]]
 
 
     // MARK: - Followers -
@@ -48,7 +69,8 @@ public protocol TwifterClientProtocol {
         cursor: String?,
         count: Int?,
         skip_status: Bool?,
-        include_user_entities: Bool?
+        include_user_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
     func followers_list(
@@ -56,7 +78,8 @@ public protocol TwifterClientProtocol {
         cursor: String?,
         count: Int?,
         skip_status: Bool?,
-        include_user_entities: Bool?
+        include_user_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
 
@@ -80,7 +103,8 @@ public protocol TwifterClientProtocol {
         cursor: String?,
         count: Int?,
         skip_status: Bool?,
-        include_user_entities: Bool?
+        include_user_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
     func friends_list(
@@ -88,12 +112,20 @@ public protocol TwifterClientProtocol {
         cursor: String?,
         count: Int?,
         skip_status: Bool?,
-        include_user_entities: Bool?
+        include_user_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
+
+    // MARK: - Friendships -
     func friendships_show(
         source_id: Int,
         target_id: Int
+    ) async throws -> [String: Any]
+
+    func friendships_show(
+        source_screen_name: String,
+        target_screen_name: String
     ) async throws -> [String: Any]
 
 
@@ -143,7 +175,7 @@ public protocol TwifterClientProtocol {
     func lists_list(
         user_id: Int,
         reverse: Bool?
-    ) async throws -> [String: Any]
+    ) async throws -> [[String: Any]]
 
     func lists_list(
         screen_name: String,
@@ -155,7 +187,8 @@ public protocol TwifterClientProtocol {
         count: Int?,
         cursor: String?,
         include_entities: Bool?,
-        skip_status: Bool?
+        skip_status: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
     func lists_memberships(
@@ -192,7 +225,8 @@ public protocol TwifterClientProtocol {
         max_id: Int?,
         count: Int?,
         include_entities: Bool?,
-        include_rts: Bool?
+        include_rts: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
     func lists_subscribers(
@@ -227,7 +261,8 @@ public protocol TwifterClientProtocol {
         until: (year: Int, month: Int, day: Int)?,
         since_id: Int?,
         max_id: Int?,
-        include_entities: Bool?
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
 
@@ -236,7 +271,8 @@ public protocol TwifterClientProtocol {
         id: [Int],
         include_entities: Bool?,
         trim_user: Bool?,
-        map: Bool?
+        map: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
     func statuses_retweeters_ids(
@@ -254,7 +290,8 @@ public protocol TwifterClientProtocol {
     func statuses_show(
         id: Int,
         trim_user: Bool?,
-        include_entities: Bool?
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
     func statuses_user_timeline(
@@ -265,7 +302,8 @@ public protocol TwifterClientProtocol {
         trim_user: Bool?,
         exclude_replies: Bool?,
         contributor_details: Bool?,
-        include_rts: Bool?
+        include_rts: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
     func statuses_user_timeline(
@@ -276,7 +314,8 @@ public protocol TwifterClientProtocol {
         trim_user: Bool?,
         exclude_replies: Bool?,
         contributor_details: Bool?,
-        include_rts: Bool?
+        include_rts: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
 
@@ -299,28 +338,32 @@ public protocol TwifterClientProtocol {
     func users_lookup(
         user_id: [Int],
         include_entities: Bool?,
-        tweet_mode: Bool?
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
     func users_lookup(
         screen_name: [String],
-        include_entities: Bool?
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
     func users_search(
         q: String,
         page: Int?,
         count: Int?,
-        include_entities: Bool?
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [[String: Any]]
 
     func user_show(
         user_id: Int,
-        include_entities: Bool?
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 
     func user_show(
         screen_name: String,
-        include_entities: Bool?
+        include_entities: Bool?,
+        tweet_mode: TweetMode?
     ) async throws -> [String: Any]
 }

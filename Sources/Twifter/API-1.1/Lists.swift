@@ -20,15 +20,15 @@ public extension TwifterClient {
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/create-manage-lists/api-reference/get-lists-list
      */
-    func lists_list(user_id: Int, reverse: Bool? = nil) async throws -> [String: Any] {
+    func lists_list(user_id: Int, reverse: Bool? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/lists/list.json?user_id=\(user_id)"
         if reverse != nil {
             urlString = "\(urlString)&reverse=\(reverse!)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
-        let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        return result ?? [:]
+        let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
+        return result ?? [[:]]
     }
 
 
@@ -67,11 +67,12 @@ public extension TwifterClient {
      - cursor: Causes the collection of list members to be broken into "pages" of consistent sizes (specified by the count parameter). If no cursor is provided, a value of -1 will be assumed, which is the first "page."
      - include_entities: The entities node will not be included when set to false.
      - skip_status: When set to either true, t or 1 statuses will not be included in the returned user objects.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/create-manage-lists/api-reference/get-lists-members
      */
-    func lists_members(list_id: Int, count: Int? = nil, cursor: String? = nil, include_entities: Bool? = nil, skip_status: Bool? = nil) async throws -> [String: Any] {
+    func lists_members(list_id: Int, count: Int? = nil, cursor: String? = nil, include_entities: Bool? = nil, skip_status: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [String: Any] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/lists/members.json?list_id=\(list_id)"
         if count != nil {
@@ -85,6 +86,9 @@ public extension TwifterClient {
         }
         if skip_status != nil {
             urlString = "\(urlString)&skip_status=\(skip_status!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
@@ -236,11 +240,12 @@ public extension TwifterClient {
      - count: Specifies the number of results to retrieve per "page."
      - include_entities: Entities are ON by default in API 1.1, each tweet includes a node called "entities". This node offers a variety of metadata about the tweet in a discreet structure, including: user_mentions, urls, and hashtags. You can omit entities from the result by using include_entities=false
      - include_rts: When set to either true , t or 1 , the list timeline will contain native retweets (if they exist) in addition to the standard stream of tweets. The output format of retweeted tweets is identical to the representation you see in home_timeline.
+     - tweet_mode: Valid request values are compat and extended, which give compatibility mode and extended mode, respectively for Tweets that contain over 140 characters
 
      - SeeAlso
      https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/create-manage-lists/api-reference/get-lists-statuses
      */
-    func lists_statuses(list_id: Int, since_id: Int? = nil, max_id: Int? = nil, count: Int? = nil, include_entities: Bool? = nil, include_rts: Bool? = nil) async throws -> [[String: Any]] {
+    func lists_statuses(list_id: Int, since_id: Int? = nil, max_id: Int? = nil, count: Int? = nil, include_entities: Bool? = nil, include_rts: Bool? = nil, tweet_mode: TweetMode? = nil) async throws -> [[String: Any]] {
         let guest_token = try await generate_guest_token().guest_token
         var urlString: String = "https://api.twitter.com/1.1/lists/statuses.json?list_id=\(list_id)"
         if since_id != nil {
@@ -257,6 +262,9 @@ public extension TwifterClient {
         }
         if include_rts != nil {
             urlString = "\(urlString)&include_rts=\(include_rts!)"
+        }
+        if tweet_mode != nil {
+            urlString = "\(urlString)&tweet_mode=\(tweet_mode!.rawValue)"
         }
         let data = try await get(url: urlString, guest_token: guest_token)
         let result = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
@@ -355,4 +363,3 @@ public extension TwifterClient {
         return result ?? [:]
     }
 }
-
