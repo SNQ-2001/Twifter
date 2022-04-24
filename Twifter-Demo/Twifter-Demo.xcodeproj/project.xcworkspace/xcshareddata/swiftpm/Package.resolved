@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "twifter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SNQ-2001/Twifter",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fc30e08216fa48ab2213b1bdd203b6652f4a9941"
+      }
+    }
+  ],
+  "version" : 2
+}
