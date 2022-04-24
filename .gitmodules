@@ -1,6 +1,3 @@
 [submodule "Demo"]
 	path = Demo
 	url = /Users/miyamototaishin/Desktop/Demo
-[submodule "Twifter-Demo"]
-	path = Twifter-Demo
-	url = https://github.com/SNQ-2001/Twifter-Demo
